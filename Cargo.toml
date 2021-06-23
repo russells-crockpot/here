@@ -1,6 +1,6 @@
 [package]
 name = "here"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["Brendan McGloin <stmonkeydoom@gmail.com>"]
 edition = "2018"
 license = "MIT"
@@ -9,7 +9,13 @@ homepage = "https://github.com/russells-crockpot/here"
 repository = "https://github.com/russells-crockpot/here"
 readme = "README.md"
 documentation = "https://docs.rs/here/"
+build = "build.rs"
 
 [dependencies]
 log = { version = "0.4.14", optional = true }
 
+
+[features]
+default = ["std", "off_on_release"]
+std = []
+off_on_release = []

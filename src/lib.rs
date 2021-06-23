@@ -1,3 +1,4 @@
+#![cfg_attr(all(not(feature = "std"), not(test)), no_std)]
 //! One of the oldest and still most commonly used debugging techniques looks something like this:
 //!
 //! ```ignore
@@ -47,36 +48,21 @@
 //! here!("A message."); // prints "(filename:lineno): A message."
 //! here!("Something: 0x{:02x}", 16);  // prints "(filename:lineno): Something: 0x0f"
 //! ```
+//!
+//! ## Feature Flags
+//! - `log`: Adds several macros to work with the `log` crate.
+//! - `off_on_release`: Makes it so that nothing is printed on release builds (enabled by default).
+//! - `std`: Adds std support (enabled by default). Because `println!` and `eprintln!` are both part
+//!    of the std library, this will get rid of the [`here`] and [`ehere`] macros. Useful if you're
+//!    just using the `log` crate.
 
 #[cfg(feature = "log")]
 mod log_rules;
 
-#[macro_export]
-/// Prints the line number and filename to stdout. Additionally, it can accept a string literal and
-/// format arguments like the `format!` macro.
-macro_rules! here {
-    () => {
-        println!("{}:{:03}", file!(), line!());
-    };
-    ($msg:literal) => {
-        println!("({}:{:03}): {}", file!(), line!(), $msg);
-    };
-    ($msg:literal, $($args:expr),+) => {
-        println!("({}:{:03}): {}", file!(), line!(), format!($msg, $d($args),+));
-    }
-}
+#[cfg(feature = "std")]
+#[cfg(not(all(not(debug_assertions), feature = "off_on_release")))]
+mod with_std;
 
-#[macro_export]
-/// Prints the line number and filename to stderr. Additionally, it can accept a string literal and
-/// format arguments like the `format!` macro.
-macro_rules! ehere {
-    () => {
-        eprintln!("{}:{:03}", file!(), line!());
-    };
-    ($msg:literal) => {
-        eprintln!("({}:{:03}): {}", file!(), line!(), $msg);
-    };
-    ($msg:literal, $($args:expr),+) => {
-        eprintln!("({}:{:03}): {}", file!(), line!(), format!($msg, $d($args),+));
-    }
-}
+#[cfg(feature = "std")]
+#[cfg(all(not(debug_assertions), feature = "off_on_release"))]
+mod dummies;

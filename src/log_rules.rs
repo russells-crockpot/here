@@ -1,3 +1,4 @@
+#[cfg(not(all(not(debug_assertions), feature = "off_on_release")))]
 macro_rules! make_log_rule {
     (($d:tt), $level:ident, $name:ident) => {
         /// Logs the line number and filename using `log::$level!`. Additionally, it can accept a
@@ -18,6 +19,21 @@ macro_rules! make_log_rule {
     ($level:ident, $name:ident) => {
         make_log_rule!{($), $level, $name}
     };
+}
+
+#[cfg(all(not(debug_assertions), feature = "off_on_release"))]
+macro_rules! make_log_rule {
+    (($d:tt), $level:ident, $name:ident) => {
+        /// Logs the line number and filename using `log::$level!`. Additionally, it can accept a
+        /// string literal and format arguments like the `format!` macro.
+        #[macro_export]
+        macro_rules! $name {
+            () => {};
+            ($msg:literal) => {};
+            ($msg:literal, $d($args:expr),+) => {};
+        }
+    };
+    ($level:ident, $name:ident) => {};
 }
 
 make_log_rule! {trace, here_trace}
