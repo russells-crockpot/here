@@ -1,6 +1,6 @@
 [package]
 name = "here"
-version = "1.1.0"
+version = "1.1.1"
 authors = ["Brendan McGloin <stmonkeydoom@gmail.com>"]
 edition = "2018"
 license = "MIT"
