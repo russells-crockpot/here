@@ -1,4 +1,5 @@
 #![cfg_attr(all(not(feature = "std"), not(test)), no_std)]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 //! One of the oldest and still most commonly used debugging techniques looks something like this:
 //!
 //! ```ignore

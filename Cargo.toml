@@ -10,9 +10,15 @@ repository = "https://github.com/russells-crockpot/here"
 readme = "README.md"
 documentation = "https://docs.rs/here/"
 build = "build.rs"
+keywords = ["development", "here", "debugging", "macros"]
+categories = ["no-std", "value-formatting", "development-tools", "development-tools::debugging"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
-log = { version = "0.4.14", optional = true }
+log = { version = "0.4", optional = true }
 
 
 [features]

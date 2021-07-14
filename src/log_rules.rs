@@ -4,6 +4,7 @@ macro_rules! make_log_rule {
         /// Logs the line number and filename using `log::$level!`. Additionally, it can accept a
         /// string literal and format arguments like the `format!` macro.
         #[macro_export]
+        #[cfg_attr(docsrs, doc(cfg(feature = "log")))]
         macro_rules! $name {
             () => {
                 ::log::$level!("{}:{:03}", file!(), line!());
@@ -27,6 +28,7 @@ macro_rules! make_log_rule {
         /// Logs the line number and filename using `log::$level!`. Additionally, it can accept a
         /// string literal and format arguments like the `format!` macro.
         #[macro_export]
+        #[cfg_attr(docsrs, doc(cfg(feature = "log")))]
         macro_rules! $name {
             () => {};
             ($msg:literal) => {};
