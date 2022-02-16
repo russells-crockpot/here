@@ -54,8 +54,8 @@
 //! - `log`: Adds several macros to work with the `log` crate.
 //! - `off_on_release`: Makes it so that nothing is printed on release builds (enabled by default).
 //! - `std`: Adds std support (enabled by default). Because `println!` and `eprintln!` are both part
-//!    of the std library, this will get rid of the [`here`] and [`ehere`] macros. Useful if you're
-//!    just using the `log` crate.
+//!    of the std library, disabling this will get rid of the [`here`] and [`ehere`] macros. Useful
+//!    if you're just using the `log` crate.
 
 #[cfg(feature = "log")]
 mod log_rules;
